@@ -27,32 +27,6 @@ An internal web app for staff to **log, approve, and track software purchase req
 
 ---
 
-## Project structure
-
-```
-softreq-container/
-├── app/
-│   ├── __init__.py
-│   └── main.py              ← FastAPI app, routes, DB models (teammate's code)
-├── templates/               ← Jinja2 HTML templates
-│   ├── landing.html         (login page)
-│   ├── dashboard.html       (list of user's requests)
-│   └── new_request.html     (submit form)
-├── static/                  ← CSS, JS, images referenced by templates
-├── data/                    ← SQLite DB lives here (gitignored, persists across restarts)
-├── .devcontainer/
-│   └── devcontainer.json    ← VS Code "Reopen in Container" config
-├── Dockerfile               ← builds the Python 3.12 image
-├── docker-compose.yml       ← runs the container on port 8000
-├── requirements.txt         ← Python dependencies
-├── .dockerignore
-├── .env.example             ← copy to .env to override defaults
-├── .gitignore
-└── README.md
-```
-
----
-
 ## Getting started
 
 ### Prerequisites
@@ -79,32 +53,6 @@ The container appears in Docker Desktop as `softreq` with a green healthcheck do
 | Requester | requester@svcte.edu | password |
 | Approver | approver@svcte.edu | password |
 | Admin | admin@svcte.edu | password |
-
----
-
-## Day-to-day commands
-
-```bash
-# Start in the background
-docker compose up -d
-
-# Stream logs (useful for debugging template errors)
-docker compose logs -f web
-
-# Stop
-docker compose down
-
-# Stop AND wipe the database (fresh seed on next start)
-docker compose down -v && rm -rf data/
-
-# Open a shell inside the running container
-docker compose exec web bash
-
-# Rebuild after editing Dockerfile or requirements.txt
-docker compose up --build
-```
-
-Edits in `./app/`, `./templates/`, and `./static/` **do not** need a rebuild — uvicorn auto-reloads on file change. Only rebuild when `Dockerfile` or `requirements.txt` changes.
 
 ---
 
